@@ -1,0 +1,84 @@
+{
+  "module": {
+    "appcd_22b73dc9-25f4-4b50-82f5-a92ac1305fd8": {
+      "name": "Writer",
+      "policy": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"CloudWatchLogGroup9452ddb9f5245ffcac6ea6a6e9a441280\",\n      \"Action\": [\n        \"logs:CreateLogGroup\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": [\n        \"${module.appcd_9452ddb9-f524-5ffc-ac6e-a6a6e9a44128.arn}\"\n      ]\n    },\n    {\n      \"Sid\": \"CloudWatchLogGroup9452ddb9f5245ffcac6ea6a6e9a441281\",\n      \"Action\": [\n        \"logs:CreateLogStream\",\n        \"logs:PutLogEvents\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": [\n        \"${module.appcd_9452ddb9-f524-5ffc-ac6e-a6a6e9a44128.arn}:*\"\n      ]\n    }\n  ]\n}",
+      "role": "${module.appcd_a0e480ec-ca00-573e-b531-b90a4cf142f0.name}",
+      "role_type": "Writer",
+      "source": "./modules/aws_iam_role_policy"
+    },
+    "appcd_9452ddb9-f524-5ffc-ac6e-a6a6e9a44128": {
+      "name": "/aws/lambda/hello-kitty-test-function-sujana-89",
+      "retention_in_days": 7,
+      "source": "./modules/aws_cloudwatch_log_group",
+      "tags": {
+        "appstack": "sujana-89-hello",
+        "component": "hello-kitty-test"
+      }
+    },
+    "appcd_a0e480ec-ca00-573e-b531-b90a4cf142f0": {
+      "assume_role_policy": "{\n\t\"Version\": \"2012-10-17\",\n\t\"Statement\": {\n\t\t\"Action\": \"sts:AssumeRole\",\n\t\t\"Effect\": \"Allow\",\n\t\t\"Principal\": {\n\t\t\t\"Service\": \"lambda.amazonaws.com\"\n\t\t}\n\t}\n}",
+      "description": null,
+      "force_detach_policies": true,
+      "inline_policy": [],
+      "name": "hello-kitty-test-role-sujana-89",
+      "source": "./modules/aws_iam_role",
+      "tags": {
+        "appstack": "sujana-89-hello",
+        "component": "hello-kitty-test"
+      }
+    },
+    "appcd_a40d58a7-dbf9-558d-9fe9-694d737a78b5": {
+      "architecture": "x86_64",
+      "authorization_type": "NONE",
+      "cors": [],
+      "create_function_url": true,
+      "description": null,
+      "environment_variables": {
+        "IMAGES_BUCKET": "sujana-89-hello"
+      },
+      "event_source_arn": null,
+      "event_source_mapping": [],
+      "filename": null,
+      "function_name": "hello-kitty-test-function-sujana-89",
+      "handler": "main.lambda_handler",
+      "log_format": null,
+      "log_group_name": "${module.appcd_9452ddb9-f524-5ffc-ac6e-a6a6e9a44128.name}",
+      "memory_size": 128,
+      "role": "${module.appcd_a0e480ec-ca00-573e-b531-b90a4cf142f0.arn}",
+      "runtime": "python3.8",
+      "s3_bucket": "stackgen-builds",
+      "s3_key": "build/app.zip",
+      "s3_object_version": null,
+      "source": "./modules/aws_lambda",
+      "system_log_level": null,
+      "tags": {
+        "appstack": "sujana-89-hello",
+        "component": "hello-kitty-test"
+      },
+      "timeout": 3
+    },
+    "appcd_b3faef57-1341-5602-b7df-490dd49efca4": {
+      "block_public_access": true,
+      "bucket_name": "sujana-89-hello",
+      "bucket_policy": "",
+      "enable_versioning": true,
+      "enable_website_configuration": false,
+      "source": "./modules/aws_s3",
+      "sse_algorithm": "aws:kms",
+      "tags": {
+        "appstack": "sujana-89-hello",
+        "component": "hello-kitty-test"
+      },
+      "website_error_document": "404.html",
+      "website_index_document": "index.html"
+    },
+    "appcd_d3007a69-bdf6-48ca-8693-5d1b0f354e8c": {
+      "name": "aws_s3-hello-kitty-test-policy",
+      "policy": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"AllowKmsAccess\",\n      \"Action\": [\n        \"kms:Decrypt\",\n        \"kms:Encrypt\",\n        \"kms:GenerateDataKey\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": [\n        \"${module.appcd_b3faef57-1341-5602-b7df-490dd49efca4.kms_arn}\"\n      ]\n    },\n    {\n      \"Sid\": \"hellokittytestIMAGESBUCKETS3Bucketb3faef5713415602b7df490dd49efca4\",\n      \"Action\": [\n        \"s3:PutObject\",\n        \"s3:ListBucket\",\n        \"s3:GetObject\",\n        \"s3:GetObjectVersion\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": [\n        \"${module.appcd_b3faef57-1341-5602-b7df-490dd49efca4.arn}\",\n        \"${module.appcd_b3faef57-1341-5602-b7df-490dd49efca4.arn}/*\"\n      ]\n    }\n  ]\n}",
+      "role": "${module.appcd_a0e480ec-ca00-573e-b531-b90a4cf142f0.name}",
+      "role_type": "Custom",
+      "source": "./modules/aws_iam_role_policy"
+    }
+  }
+}
